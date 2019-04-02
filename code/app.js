@@ -1,3 +1,4 @@
+//all current comments are about todos (sorry)
 const path = require('path');
 
 const express = require('express');
@@ -40,6 +41,8 @@ app.get('/highscores', (req, res)=>{
 });
 
 app.get('/account', (req, res)=>{
+    //if req.query is empty, set the query username to userUsername from cookies
+        //if no user is logged on then redirect to login
     console.log(req.cookies);
     Accounts.findOne(req.query, (err, account)=>{
         if(req.query.username == req.cookies.userUsername){
