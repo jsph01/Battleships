@@ -1,0 +1,35 @@
+doctype html
+html
+    head
+        title Battleships!
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        form(id="form", method="post", onSubmit="return checkRegisterForm()")
+            label Date of Birth: 
+            label(class="error-label", id="dateErr")
+            br
+            input(type="text", id="birthMonth", name="month", placeholder="mm", size=2, maxlength=2)
+            input(type="text", id="birthDay", name="day", placeholder="dd", size=2, maxlength=2)
+            input(type="text", id="birthYear", name="year", placeholder="yyyy", size=4, maxlength=4)
+            br
+            label Username: 
+            if(usernameTaken)
+                label(class="error-label", id="usernameErr") username not available
+            br
+            input(type="text", id="username", name="username", placeholder="username")
+            br
+            label Password: 
+            label(class="error-label", id="passwordErr")
+            br
+            input(type="password", id="password", name="password", placeholder="password")
+            br
+            label Confirm:
+            lavel(class="error-label", id="confirmErr")
+            br
+            input(type="password", id="confirm", name="confirm", placeholder="confirm")
+            br
+            input(type="submit", value="sign up")
+        form(action="login")
+            input(type="submit", value="login")
+        script(src="/javascripts/submitform.js")
+        

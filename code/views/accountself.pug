@@ -1,0 +1,22 @@
+doctype html
+html
+    head
+        title Battleships!
+    body
+        label Username: #{userAccount.username}
+        br
+        label Date of Birth: #{userAccount.birthMonth} / #{userAccount.birthDay} / #{userAccount.birthYear}
+        br
+        
+        img(id="img")
+        script.
+            var imgTag = document.getElementById("img")
+            var image = '#{userAccount.image}'
+            imgTag.setAttribute('src', "/images/" + image)
+        br
+        form(action='image')
+            input(type="submit", value="select new image")
+        br
+        label Mantra: #{userAccount.mantra}
+        form(action="mantra")
+            input(type="submit", value="edit mantra")
