@@ -137,6 +137,8 @@ app.post('/register', (req, res)=>{
                     });
                 }
             });
+//test cookie
+            res.cookie('userUsername', user.username);
             res.redirect('account?username='+user.username);
         }
     });
