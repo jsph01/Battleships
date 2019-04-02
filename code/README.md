@@ -21,6 +21,4 @@ Current functions
 Notes
   - go to localhost:3000/highscores to view the highscores list and to navigate to other users' account pages.
   - currently, the 'rank' of an accout is assigned by order of registartion
-
-Todo
-  - login through registration should save the username as a cookie
+  - MongoDB needs to be installed on your computer (eventually it should be hosted from aws or something similar)
