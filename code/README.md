@@ -19,6 +19,7 @@ Current functions
 - highscores page shows top 100 accounts ordered by rank
 
 Notes
+  - go to localhost:3000/highscores to view the highscores list and to navigate to other users' account pages.
   - currently, the 'rank' of an accout is assigned by order of registartion
 
 Todo
