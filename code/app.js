@@ -55,6 +55,7 @@ app.get('/account', (req, res)=>{
 });
 
 app.get('/login', (req, res)=>{
+    //redirect to account if user is already logged in
     res.render('login', {credentialsValid: true});
 });
 
@@ -71,6 +72,7 @@ app.post('/login', (req, res)=>{
 
 
 app.get('/image', (req, res)=>{
+    //redirect to login if user is not logged in
     res.render('editimage');
 });
 
@@ -112,7 +114,7 @@ app.get('/register', (req, res)=>{
 
 app.post('/register', (req, res)=>{
     Accounts.findOne({"username": req.body.username}, (err, account)=>{
-        //don't forget the error
+        //handle error here
 
         if(account){
             res.render('register', {usernameTaken: true});
@@ -137,7 +139,6 @@ app.post('/register', (req, res)=>{
                     });
                 }
             });
-//test cookie
             res.cookie('userUsername', user.username);
             res.redirect('account?username='+user.username);
         }
