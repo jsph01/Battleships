@@ -29,7 +29,25 @@ app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/', (req,res)=>{
+    var userUsername = req.cookies.userUsername;
+    if(userUsername)
+        res.redirect('account?username='+userUsername);
+    else
+        res.redirect('login');
+});
 
+app.get('/gameselection', (req, res)=>{
+    res.render('gameselection');
+});
+
+app.get('/singlegame', (req, res)=>{
+    res.render('singlegame');
+});
+
+app.get('/multigame', (req, res)=>{
+    res.render('multigame');
+});
 
 app.get('/highscores', (req, res)=>{
     var query = Accounts.find({}, {'_id': 0});
@@ -41,11 +59,17 @@ app.get('/highscores', (req, res)=>{
 });
 
 app.get('/account', (req, res)=>{
-    //if req.query is empty, set the query username to userUsername from cookies
-        //if no user is logged on then redirect to login
-    console.log(req.cookies);
+    var userUsername = req.cookies.userUsername;
+    if(!req.query.username){
+        if(userUsername){
+            req.query.username = userUsername;
+        }else{
+            res.redirect('login');
+        }
+    }
+    
     Accounts.findOne(req.query, (err, account)=>{
-        if(req.query.username == req.cookies.userUsername){
+        if(req.query.username == userUsername){
             res.render('accountself', {
                 userAccount: account
             });
@@ -58,7 +82,6 @@ app.get('/account', (req, res)=>{
 });
 
 app.get('/login', (req, res)=>{
-    //redirect to account if user is already logged in
     res.render('login', {credentialsValid: true});
 });
 
@@ -75,40 +98,46 @@ app.post('/login', (req, res)=>{
 
 
 app.get('/image', (req, res)=>{
-    //redirect to login if user is not logged in
     res.render('editimage');
 });
 
 app.post('/image', (req, res)=>{
     var userUsername = req.cookies.userUsername;
-    var image = null;
-    if(req.body.profile1 === 'select')
-        image = 'profile1.png';
-    else if(req.body.profile2 === 'select')
-        image = 'profile2.png';
-    else if(req.body.profile3 === 'select')
-        image = 'profile3.png';
-    
-    Accounts.findOne({'username': userUsername}, (err, account)=>{
-        account.image = image;
-        account.save();
-        res.redirect("/account?username="+userUsername);
-    });
+    if(userUsername){
+        var image = null;
+        if(req.body.profile1 === 'select')
+            image = 'profile1.png';
+        else if(req.body.profile2 === 'select')
+            image = 'profile2.png';
+        else if(req.body.profile3 === 'select')
+            image = 'profile3.png';
+        
+        Accounts.findOne({'username': userUsername}, (err, account)=>{
+            account.image = image;
+            account.save();
+            res.redirect("/account?username="+userUsername);
+        });
+    }else{
+        res.redirect('login');
+    }
 });
 
 app.get('/mantra', (req, res)=>{
-    //redirect to login if user is not logged in
     res.render("editmantra");
 });
 
 app.post('/mantra', (req, res)=>{
     var userUsername = req.cookies.userUsername;
-    var mantra = req.body.mantra;
-    Accounts.findOne({"username": userUsername}, (err, account)=>{
-        account.mantra = mantra;
-        account.save();
-        res.redirect("/account?username="+userUsername);
-    });
+    if(userUsername){
+        var mantra = req.body.mantra;
+        Accounts.findOne({"username": userUsername}, (err, account)=>{
+            account.mantra = mantra;
+            account.save();
+            res.redirect("/account?username="+userUsername);
+        });
+    }else{
+        res.redirect('login');
+    }
 });
 
 app.get('/register', (req, res)=>{
@@ -117,11 +146,11 @@ app.get('/register', (req, res)=>{
 
 app.post('/register', (req, res)=>{
     Accounts.findOne({"username": req.body.username}, (err, account)=>{
-        //handle error here
-
-        if(account){
+        if(err){
+            console.log(err);
+        }else if(account){
             res.render('register', {usernameTaken: true});
-        } else {
+        }else{
             let user = new Accounts();
             user.username = req.body.username;
             user.password = req.body.password;
@@ -147,8 +176,6 @@ app.post('/register', (req, res)=>{
         }
     });
 });
-
-
 
 app.listen(3000, ()=>{
     console.log("database listening to port 3000...");
