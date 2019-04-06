@@ -21,9 +21,9 @@ Current functions
 
 - highscores page shows top 100 accounts ordered by rank
 
-- game selection redirection
+- setup stage (front end logic/service layer) complete
 
-- single player game includes the setup stage of battleship
+- starting a new game will search the database for existing games first, however this feature is not complete yet.
 
 Notes
   - go to localhost:3000/highscores to view the highscores list and to navigate to other users' account pages.
