@@ -1,0 +1,19 @@
+doctype html
+html
+    head
+    body
+        canvas(id="user-canvas", width="480", height="480")
+        script.
+            var userGrid = JSON.parse('!{userGrid}');
+            userCanvas = document.getElementById("user-canvas");
+            userCtx = userCanvas.getContext('2d');
+
+            for(let i=0; i<100; i++){
+                let x = i%10;
+                let y = parseInt(i/10);
+                userCtx.beginPath();
+                userCtx.rect(x*48, y*48, 48, 48);
+                userCtx.fillStyle = userGrid[i] === "water" ? 'blue' : 'green'
+                userCtx.fill();
+                userCtx.closePath();
+            }

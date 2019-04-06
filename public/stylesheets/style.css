@@ -1,0 +1,13 @@
+canvas {
+    cursor: pointer;
+    border: 1px black solid;
+    margin: 24px;
+}
+
+#user-canvas:focus{
+    cursor: grab;
+}
+
+.error-label {
+    color: red;
+}

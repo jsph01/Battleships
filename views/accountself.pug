@@ -1,0 +1,30 @@
+doctype html
+html
+    head
+        title Battleships!
+    body
+        script.
+            function logout(){
+                document.cookie = "userUsername= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+            }
+        label Username: #{userAccount.username}
+        form(action="login")
+            input(type="submit", value="log out", onclick="logout()")
+        br
+        label Date of Birth: #{userAccount.birthMonth} / #{userAccount.birthDay} / #{userAccount.birthYear}
+        br
+        
+        img(id="img")
+        script.
+            var imgTag = document.getElementById("img")
+            var image = '#{userAccount.image}'
+            imgTag.setAttribute('src', "/images/" + image)
+        br
+        form(action='image')
+            input(type="submit", value="select new image")
+        br
+        label Mantra: #{userAccount.mantra}
+        form(action="mantra")
+            input(type="submit", value="edit mantra")
+        form(action="setup")
+            input(type="submit", value="play game")

@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        title Battleships!
+    body
+        label Username: #{account.username}
+        br
+        
+        img(id="img")
+        script.
+            var imgTag = document.getElementById("img")
+            var image = '#{account.image}'
+            imgTag.setAttribute('src', "/images/" + image)
+        br
+        label Mantra: #{account.mantra}
