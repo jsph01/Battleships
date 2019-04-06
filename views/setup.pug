@@ -1,0 +1,13 @@
+doctype html
+html
+    head
+        title Battleships!
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        h2 Set Up your grid
+        canvas(id="user-canvas", width="480", height="480")
+        script(src="/javascripts/battleships.js")
+        
+        form(method="post", onsubmit="return mySubmit()")
+            input(id="data", type="hidden", name="data")
+            input(type="submit", value="ready")
